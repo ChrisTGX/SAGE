@@ -1,0 +1,11 @@
+__pycache__
+<<<<<<< HEAD
+db.sqlite3
+=======
+/db.sqlite3
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/Desarrollo
+=======
+/livevalidation/
+/static/
+>>>>>>> refs/heads/Desarrollo

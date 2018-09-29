@@ -1,0 +1,286 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <meta charset="utf-8">
+    <title>
+      SAGE
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/base.css'%}" rel="stylesheet">
+    <link href="{% static 'css/jquery-ui.css'%}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/livevalidation.css'%}" rel="stylesheet">
+    
+   </head>
+
+ <body>
+        
+        <!-- Header -->
+<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-toggle"></span>
+      </button>
+          <a class="navbar-brand" href="..">
+            SAGE
+          </a>
+    </div>
+  </div><!-- /container -->
+</div>
+<!-- /Header -->
+
+<!-- Main -->
+<div class="container">
+  
+  <!-- upper section -->
+  <div class="row">
+  <div class="col-sm-2">
+      <!-- left -->
+                <h3>
+            <i class="glyphicon glyphicon-briefcase">
+            </i>
+            Menú
+          </h3>
+      <hr>
+
+         <ul class="nav nav-stacked">
+            <li>
+              <a href="..">
+                <i class="fa fa-bus"></i>
+                Estacionamientos
+              </a>
+            </li>
+          </ul>
+          <br>
+          <ul class="nav nav-stacked">
+            <li>
+              <a href="./reserva">
+                <i class="fa fa-pencil-square-o"></i>
+                Reservar
+              </a>
+            </li>
+          </ul>
+      <hr>
+      
+    </div><!-- /span-3 -->
+    <div class="col-sm-9">
+        
+      <!-- column 2 --> 
+       <h3><i class="fa fa-bus"></i> Estacionamiento {{estacionamiento.Nombre}}</h3>  
+            
+       <hr>
+      
+     <!--/row-->
+    <div class="col-md-4">
+      
+      <table class="table table-striped">
+        <thead>
+          
+        </thead>
+        <tbody>
+            <tr><td><b><i class="fa fa-car"></i> Nombre del Estacionamiento:</b></td></tr>
+      <tr><td>{{estacionamiento.Nombre}}</td></tr>
+
+      <tr><td><b><i class="fa fa-user"></i> Nombre del Propietario:</b></td></tr>
+      <tr><td>{{estacionamiento.Propietario.NombreProp}}</td></tr>
+
+      <tr><td><b><i class="fa fa-home"></i> Dirección:</b></td></tr>
+      <tr><td>{{estacionamiento.Direccion}}</td></tr>
+
+      {% if estacionamiento.Propietario.Telefono_1 %}
+        <tr><td><b><i class="fa fa-phone"></i> Teléfono:</b></td></tr>
+        <tr><td>{{estacionamiento.Propietario.Telefono_1}}</td></tr>
+      {% endif %}
+
+      {% if estacionamiento.Propietario.Telefono_2 %}
+        <tr><td><b><i class="fa fa-phone"></i> Teléfono:</b></td></tr>
+        <tr><td>{{estacionamiento.Propietario.Telefono_2}}</td></tr>
+      {% endif %}
+
+       {% if estacionamiento.Propietario.Telefono_3 %}
+        <tr><td><b><i class="fa fa-phone"></i> Teléfono:</b></td></tr>
+        <tr><td>{{estacionamiento.Propietario.Telefono_3}}</td></tr>
+      {% endif %}
+
+      {% if estacionamiento.Propietario.Email_1 %}
+        <tr><td><b><i class="fa fa-at"></i> Correo Electrónico:</b></td></tr>
+        <tr><td>{{estacionamiento.Propietario.Email_1}}</td></tr>
+      {% endif %}
+
+      {% if estacionamiento.Propietario.Email_2 %}
+      <tr><td><b><i class="fa fa-at"></i> Correo Electrónico:</b></td></tr>
+      <tr><td>{{estacionamiento.Propietario.Email_2}}</td></tr>
+      {% endif %}
+
+
+      <tr><td><b><i class="fa fa-circle"></i> RIF:</b></td></tr>
+      <tr><td>{{estacionamiento.Propietario.Rif}}</td></tr>
+          
+        </tbody>
+      </table>
+      
+      <hr>  
+
+    </div>
+    <div class="col-md-4">
+       
+       <table class="table table-striped">
+        <thead>
+          
+        </thead>
+        <tbody>
+      {% if estacionamiento.NroPuesto %}
+        <tr><td><b><i class="fa fa-car"></i> Número de Puestos:</b></td></tr>
+        <tr><td>{{estacionamiento.NroPuesto}}</td></tr>
+      {% endif %}
+      <tr><td><b><i class="fa fa-clock-o"></i> Horario de Apertura:</b></td></tr>
+      {% if estacionamiento.Apertura %}
+        <tr><td>{{estacionamiento.Apertura}}</td></tr>
+      {% else %}
+      	<tr><td>00:00</td></tr>
+      {% endif %}
+      {% if estacionamiento.Cierre %}
+        <tr><td><b><i class="fa fa-clock-o"></i> Horario de Cierre:</b></td></tr>
+        <tr><td>{{estacionamiento.Cierre}}</td></tr>
+      {% endif %}
+      {% if estacionamiento.Reservas_Inicio %}
+        <tr><td><b><i class="fa fa-clock-o"></i> Horario Inicio de reserva:</b></td></tr>
+        <tr><td>{{estacionamiento.Reservas_Inicio}}</td></tr>
+      {% endif %}
+      {% if estacionamiento.Reservas_Cierre %}
+        <tr><td><b><i class="fa fa-clock-o"></i> Horario Fin de reserva:</b></td></tr>
+        <tr><td>{{estacionamiento.Reservas_Cierre}}</td></tr>
+      {% endif %}
+      {% if diferenciado.HoraPicoInicio and esquema.TipoEsquema == "4" %}
+        <tr><td><b><i class="fa fa-money"></i></i> Inicio de Hora Pico:</b></td></tr>
+        <tr><td>{{diferenciado.HoraPicoInicio}}</td></tr>
+      {% endif %}
+      {% if diferenciado.HoraPicoFin and esquema.TipoEsquema == "4" %}
+        <tr><td><b><i class="fa fa-money"></i></i> Fin de Hora Pico:</b></td></tr>
+        <tr><td>{{diferenciado.HoraPicoFin}}</td></tr>
+      {% endif %}
+      {% if esquema.TipoEsquema %}
+        <tr><td><b><i class="fa fa-money"></i></i> Esquema Tarifario:</b></td></tr>
+        <tr><td>
+        	{% if esquema.TipoEsquema == "1" %}
+        		Por hora
+        	{% elif esquema.TipoEsquema == "2" %}
+        		Por hora y fracción
+        	{% elif esquema.TipoEsquema == "3" %}
+        		Por minuto
+        	{% elif esquema.TipoEsquema == "4" %}
+        		Diferenciado por hora
+          {% elif esquema.TipoEsquema == "5" %}
+            Diferenciado por Fin de Semana
+        	{% endif %}
+        </td></tr>
+      {% endif %}
+ 	  {% if esquema.Tarifa %}
+        <tr><td><b><i class="fa fa-money"></i></i> Tarifa:</b></td></tr>
+        <tr><td>{{esquema.Tarifa}} Bsf.</td></tr>
+      {% endif %}
+      {% if diferenciado.TarifaPico and esquema.TipoEsquema == "4" %}
+        <tr><td><b><i class="fa fa-money"></i></i> Tarifa de Hora Pico:</b></td></tr>
+        <tr><td>{{diferenciado.TarifaPico}} Bsf.</td></tr>
+      {% endif %}
+      {% if diferenciado.TarifaPico and esquema.TipoEsquema == "5" %}
+        <tr><td><b><i class="fa fa-money"></i></i> Tarifa de Fin de Semana:</b></td></tr>
+        <tr><td>{{diferenciado.TarifaPico}} Bsf.</td></tr>
+      {% endif %}
+      
+        </tbody>
+      </table>
+      
+      <hr>
+      
+    </div><div class="col-md-4">
+
+    
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">
+                <i class="glyphicon glyphicon-wrench pull-right">
+                </i>
+                <h4>
+                  Reserva
+                </h4>
+              </div>
+            </div>
+            <div class="panel-body">
+
+      
+              
+              <form action="./reserva" method="post" class="form form-vertical">
+              {% csrf_token %}
+              {{form}}
+                
+                <div class="control-group">
+                  <label>
+                  </label>
+                  <div class="controls">
+                    <button type="submit" class="btn btn-primary">
+                      Chequear Disponibilidad
+                    </button>
+                  </div>
+                </div>
+                
+                
+              </form>
+              
+              
+            </div>
+
+            <!--/panel content-->
+          </div>
+          <!--/panel-->
+          
+          <!--/panel-->
+          
+        </div><!--/col-span-9-->
+    
+  </div><!--/row-->
+  <!-- /upper section -->
+  
+  <!-- lower section -->
+  <!--/row-->
+
+</div><!--/container-->
+<!-- /Main -->
+<br><br><br><br>
+
+    <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/livevalidation_standalone.js'%}"></script>
+    <script type="text/javascript">
+        var date_format_message = "Formatos válidos: mm/dd/aaaa, m/d/aaaa, mm/d/aaaa y m/dd/aaaa.";
+        var time_format_message = "Formatos válidos: hh:mm y h:mm";
+        new LiveValidation('id_FechaInicio').add(Validate.Format, 
+                                                { pattern: /^\d\d?\/\d\d?\/\d\d\d\d$/ ,
+                                                  failureMessage: date_format_message });
+        new LiveValidation('id_FechaFinal').add(Validate.Format, 
+                                                { pattern: /^\d\d?\/\d\d?\/\d\d\d\d$/ , 
+                                                  failureMessage: date_format_message });
+        new LiveValidation('id_HoraInicio').add(Validate.Format, 
+                                                { pattern: /^([01]?[0-9]|2[0-3]):[0-5]\d$/ ,
+                                                  failureMessage: time_format_message });
+        new LiveValidation('id_HoraFinal').add(Validate.Format, 
+                                                { pattern: /^([01]?[0-9]|2[0-3]):[0-5]\d$/ ,
+                                                  failureMessage: time_format_message });
+        
+    </script>
+    <script>
+        $(document).ready(function() {
+            $( ".datepicker" ).datepicker({
+                changeMonth: true,
+                changeYear: true, 
+            });
+        });
+    </script>
+</body>
+
+</html>

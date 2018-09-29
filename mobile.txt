@@ -1,0 +1,5 @@
+To allow mobile browsing, you have to allow the server to be connected from
+the web:
+- sudo python3 manage.py runserver 0.0.0.0:xxxx   (0.0.0.0 is important to allow 
+  connection to every ip)
+- Forward port xxxx in your router

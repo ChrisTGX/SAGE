@@ -1,0 +1,169 @@
+{% load staticfiles %}
+<html lang="es"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>
+      SAGE
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/base.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static 'css/livevalidation.css'%}" rel="stylesheet">
+
+   </head>
+
+    <!-- Header -->
+    <body><div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-toggle">
+            </span>
+          </button>
+          <a class="navbar-brand" href="..">
+            SAGE
+          </a>
+        </div>
+        <div class="navbar-collapse collapse">
+
+        </div>
+      </div>
+      <!-- /container -->
+    </div>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <div class="container">
+
+      <!-- upper section -->
+      <div class="row">
+        <div class="col-sm-2">
+          <!-- left -->
+          <h3>
+            <i class="glyphicon glyphicon-briefcase">
+            </i>
+            Menú
+          </h3>
+          <hr>
+          
+          <ul class="nav nav-stacked">
+            <li>
+              <a href=".">
+                <i class="fa fa-bus"></i>
+                Estacionamientos
+              </a>
+            </li>
+          </ul>
+          
+          <br>
+          
+          <ul class="nav nav-stacked">
+            <li>
+              <a href="./reserva">
+                <i class="fa fa-pencil-square-o"></i>
+                Reservar
+              </a>
+            </li>
+          </ul>
+            
+          <hr>
+        </div>
+        <!-- /span-3 -->
+<div class="col-sm-10">
+        
+      <!-- column 2 --> 
+       <h3><i class="fa fa-bus"></i> Estacionamientos</h3>  
+            
+       <hr>
+      
+     <div class="row">
+            <!-- center left--> 
+          <!--/col-->
+         
+            <!--center-right-->
+          <!--/col-span-6-->
+     
+       <div class="col-md-8" style="color:{{color}}">
+            {{mensaje}}
+			<p>
+			<form action="./pagar_reserva" method="post" class="form form-vertical">
+                {% csrf_token %}
+                {{form}}
+                
+				<div class="control-group">
+                  <label>
+                  </label>
+                  <div class="controls">
+                  
+                    <button type="submit" class="btn btn-primary">
+                      Pagar
+                    </button>
+                    
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#cancelModal">
+					  Cancelar
+					</button>
+                    <!-- Modal -->
+					<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="cancelModalLabel" style="color:black;">¿Está seguro de que desea cancelar la transacción?</h4>
+					      </div>
+					      <div class="modal-body" style="color:black;">
+					        Los datos rellenados en el formulario se perderán y el pago, junto con la reservación actual, serán cancelados.
+					      </div>
+					      <div class="modal-footer">
+					        <a class="btn btn-default" href="./reserva">Sí, salir</a>
+					        <button type="button" class="btn btn-primary" data-dismiss="modal">No, continuar</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					
+                  </div>
+                </div>
+            </form>
+
+
+      <hr>              
+        </div>
+        <div class="col-md-4">
+
+    
+          
+          <!--/panel-->
+          
+          <!--/panel-->
+          
+        </div></div><!--/row-->
+    </div>
+        
+      </div>
+      <!--/row-->
+      <!-- /upper section -->
+      
+      <!-- lower section -->
+      <div class="row">
+      </div>
+      <!--/row-->
+      
+    </div>
+    
+    
+    <script type="text/javascript" src="/static/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/livevalidation_standalone.js'%}"></script>
+    <script type="text/javascript">
+        new LiveValidation('id_NroTarjeta').add(Validate.Format, 
+                                                { pattern: /^\d{16}$/ ,
+                                                  failureMessage: "Introduzca un número de tarjeta de crédito con un formato válido." });
+        new LiveValidation('id_NombreTitular').add(Validate.Format,
+                                                { pattern: /^[a-zA-ZáéíóúñÑÁÉÍÓÚ ]+$/,
+                                                 failureMessage: "Sólo debe contener letras." });
+        new LiveValidation('id_CedulaTitular').add(Validate.Format, 
+                                                { pattern: /^[VvEe]-?\d{1,8}$/,
+                                                  failureMessage: "Introduzca un número de cédula con formato válido." });
+    </script>
+</body></html>

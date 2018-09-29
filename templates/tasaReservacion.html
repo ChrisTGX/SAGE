@@ -1,0 +1,217 @@
+{% load staticfiles %}
+{% load chart_tags %}
+<!DOCTYPE html>
+<html lang="es"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <meta charset="utf-8">
+    <title>
+      SAGE
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/base.css'%}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet">
+    
+   </head>
+
+ <body>
+        
+        <!-- Header -->
+<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-toggle"></span>
+      </button>
+          <a class="navbar-brand" href="..">
+            SAGE
+          </a>
+    </div>
+  </div><!-- /container -->
+</div>
+<!-- /Header -->
+
+<!-- Main -->
+<div class="container">
+  
+  <!-- upper section -->
+  <div class="row">
+  <div class="col-sm-2">
+      <!-- left -->
+                <h3>
+            <i class="glyphicon glyphicon-briefcase">
+            </i>
+            Menú
+          </h3>
+      <hr>
+
+         <ul class="nav nav-stacked">
+            <li>
+              <a href="..">
+                <i class="fa fa-bus"></i>
+                Estacionamientos
+              </a>
+            </li>
+          </ul>
+
+          <br>
+          {% if estacionamiento.Cierre and estacionamiento.NroPuesto and esquema.TipoEsquema and esquema.Tarifa %}
+            <ul class="nav nav-stacked">
+              <li>
+                <a href="./reserva">
+                  <i class="fa fa-pencil-square-o"></i>
+                  Reservar
+                </a>
+              </li>
+            </ul>
+          {% endif %}
+      <hr>
+      
+    </div><!-- /span-3 -->
+    
+    <div class="col-sm-9">
+		<h3><i class="fa fa-bus"></i> Estacionamiento {{estacionamiento.Nombre}}</h3>
+     	<hr>
+		   
+		<h4>Reporte de nivel de reservación por grano de Hora: </h4>
+		<br>
+		
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    {% for ocup in ocupacion %}
+		    	{% if ocup.Id == 0 %}
+		    	<li role="presentation" class="active"><a href="#{{ocup.Id}}" aria-controls="{{ocup.Id}}" role="tab" data-toggle="tab">Hoy</a></li>
+		    	{% elif ocup.Id == 1 %}
+		    	<li role="presentation"><a href="#{{ocup.Id}}" aria-controls="{{ocup.Id}}" role="tab" data-toggle="tab">Mañana</a></li>
+		    	{% else %}
+		    	<li role="presentation"><a href="#{{ocup.Id}}" aria-controls="{{ocup.Id}}" role="tab" data-toggle="tab">{{ocup.dia}}</a></li>
+		    	{% endif %}
+		  	{% endfor %}
+		  </ul>
+		
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		  	{% for ocup in ocupacion %}
+		  		{% if ocup.Id == 0 %}
+		  		<div role="tabpanel" class="tab-pane active" id="{{ocup.Id}}">
+		  		{% else %}
+		  		<div role="tabpanel" class="tab-pane" id="{{ocup.Id}}">
+		  		{% endif %}
+		    		<div class="row">
+						<div class="col-sm-6">
+							<table class="table table-striped">
+				    			<thead>
+				    				<tr><th></th><th style="text-align: center;">Hora</th><th style="text-align: center;">Porcentaje de Ocupación</th></tr>
+				    			</thead>
+				    			<tbody>
+							    	{% for percent in ocup.horas %}
+							    		{% if forloop.counter0 < 12 %}
+							    			{% if percent < 10 %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #FF0000">{{percent}} %</td></tr>
+							    			{% elif percent >= 10 and percent < 30 %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #FF9900">{{percent}} %</td></tr>
+							    			{% elif percent >= 30 and percent < 50 %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #BBCC00">{{percent}} %</td></tr>
+							    			{% elif percent >= 50 and percent < 75 %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #00BB77">{{percent}} %</td></tr>
+							    			{% else %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #00AA00">{{percent}} %</td></tr>
+							    			{% endif %} 
+							    		{% endif %}
+							    	{% endfor %}
+				    			</tbody>
+				    		</table>
+						</div> <!-- column 1 -->
+						
+						<div class="col-sm-6">
+							<table class="table table-striped">
+				    			<thead>
+				    				<tr><th></th><th style="text-align: center;">Hora</th><th style="text-align: center;">Porcentaje de Ocupación</th></tr>
+				    			</thead>
+				    			<tbody>
+							    	{% for percent in ocup.horas %}
+							    		{% if forloop.counter0 >= 12 %}
+							    			{% if percent < 10 %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #FF0000">{{percent}} %</td></tr>
+							    			{% elif percent >= 10 and percent < 30 %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #FF9900">{{percent}} %</td></tr>
+							    			{% elif percent >= 30 and percent < 50 %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #BBCC00">{{percent}} %</td></tr>
+							    			{% elif percent >= 50 and percent < 75 %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #00BB77">{{percent}} %</td></tr>
+							    			{% else %}
+							    				<tr><td style="text-align: right;">{{forloop.counter}}</td><td style="text-align: center;">{{forloop.counter0}}:00 - {{forloop.counter}}:00</td><td style="text-align: center; color: #00AA00">{{percent}} %</td></tr>
+							    			{% endif %} 
+							    		{% endif %}
+							    	{% endfor %}
+				    			</tbody>
+				    		</table>
+						    <div class="row">
+							  <div class="col-md-4 col-md-offset-8">
+							  	<a type="button" class="btn btd-default" data-toggle="modal" data-target="#chartModal{{ocup.Id}}"><i class="fa fa-line-chart"></i> Ver gráfico</a>
+						    	<p>
+						    	
+						    	
+						    	
+						    	<!-- Modal -->
+								<div class="modal fade" id="chartModal{{ocup.Id}}" tabindex="-1" role="dialog" aria-labelledby="chartModelLabel{{ocup.Id}}" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="chartModalLabel{{ocup.Id}}">Gráfico de la tasa de reservación del {{ocup.dia}}</h4>
+								      </div>
+								      <div class="modal-body">
+										{% chart %}
+										     chxr=0,0,100,1,0,23
+										     chxt=x,x,y,y
+										     chxl=1:|Hora+Inicial|3:|Porcentaje
+										     chxp=1,50|3,50
+										     chbh=a
+										     chs=520x220
+										     cht=bvs
+										     chco=4D89F9
+										     chds=0,100
+										     chd=t:{{ ocup.horas|join:',' }}
+										{% endchart %}
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+						    	
+						    	
+						    	
+							  </div>
+							</div>
+						</div> <!-- column 2 -->
+					</div> <!-- row -->
+		    	</div>
+		    {% endfor %}
+		    <p>
+		  </div>
+		
+		</div> <!-- tabpanel -->
+       
+       
+    </div> <!-- column 2 -->
+    
+  </div><!--/row-->
+  <!-- /upper section -->
+  
+  <!-- lower section -->
+  <!--/row-->
+
+</div><!--/container-->
+
+
+    <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%}"></script>
+</body>
+
+</html>

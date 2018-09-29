@@ -1,0 +1,145 @@
+<html lang="es"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>
+      SAGE
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/base.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+
+   </head>
+
+    <!-- Header -->
+    <body><div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-toggle">
+            </span>
+          </button>
+          <a class="navbar-brand" href="..">
+            SAGE
+          </a>
+        </div>
+        <div class="navbar-collapse collapse">
+
+        </div>
+      </div>
+      <!-- /container -->
+    </div>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <div class="container">
+
+      <!-- upper section -->
+      <div class="row">
+        <div class="col-sm-2">
+          <!-- left -->
+          <h3>
+            <i class="glyphicon glyphicon-briefcase">
+            </i>
+            Menú
+          </h3>
+          <hr>
+          
+          <ul class="nav nav-stacked">
+            <li>
+              <a href=".">
+                <i class="fa fa-bus"></i>
+                Estacionamientos
+              </a>
+            </li>
+          </ul>
+          
+          <br>
+          
+		  <ul class="nav nav-stacked">
+            <li>
+              <a href="./reserva">
+                <i class="fa fa-pencil-square-o"></i>
+                Reservar
+              </a>
+            </li>
+          </ul>
+ <!--           <ul class="nav nav-stacked">
+            <li>
+              <a href="./hola">
+                <i class="fa fa-bus"></i>
+                blabla
+              </a>
+            </li>
+          </ul> -->
+
+
+          
+          <hr>
+          
+        </div>
+        <!-- /span-3 -->
+<div class="col-sm-10">
+        
+      <!-- column 2 --> 
+       <h3><i class="fa fa-bus"></i> Estacionamientos</h3>  
+            
+       <hr>
+      
+     <div class="row">
+            <!-- center left--> 
+          <!--/col-->
+         
+            <!--center-right-->
+          <!--/col-span-6-->
+     
+       <div class="col-md-8" style="color:{{color}}"> 
+			{{mensaje}}
+			<p>
+       		{% ifequal color "red" %}
+       			<div class="control-group">
+                  <div class="controls">
+                    <a class="btn btn-primary" href="{{url}}">
+                      Regresar
+                    </a>
+                  </div>
+                </div>
+            {% else %}
+            	<div class="control-group">
+                  <div class="controls">
+                    <a class="btn btn-primary" href=".">
+                      Regresar
+                    </a>
+                    <a class="btn btn-primary" href="./print_report">
+                      Imprimir Recibo de Pago
+                    </a>
+                  </div>
+                </div>
+       		{% endifequal %}
+      <hr>              
+    </div><div class="col-md-4">
+
+    
+          
+          <!--/panel-->
+          
+          <!--/panel-->
+          
+        </div></div><!--/row-->
+    </div>
+        
+      </div>
+      <!--/row-->
+      <!-- /upper section -->
+      
+      <!-- lower section -->
+      <div class="row">
+      </div>
+      <!--/row-->
+      
+    </div>
+
+    <script type="text/javascript" src="/static/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+</body></html>

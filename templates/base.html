@@ -1,0 +1,190 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <meta charset="utf-8">
+    <title>
+      SAGE
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/base.css'%}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/livevalidation.css'%}" rel="stylesheet">
+   </head>
+    
+    <!-- Header -->
+    <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-toggle">
+            </span>
+          </button>
+          <a class="navbar-brand" href="..">
+            SAGE
+          </a>
+        </div>
+        <div class="navbar-collapse collapse">
+          
+        </div>
+      </div>
+      <!-- /container -->
+    </div>
+    <!-- /Header -->
+    
+    <!-- Main -->
+    <div class="container">
+      
+      <!-- upper section -->
+      <div class="row">
+        <div class="col-sm-2">
+          <!-- left -->
+          <h3>
+            <i class="glyphicon glyphicon-briefcase">
+            </i>
+            Menú
+          </h3>
+          <hr>
+          
+          <ul class="nav nav-stacked">
+            <li>
+              <a href=".">
+                <i class="fa fa-bus"></i>
+                Estacionamientos
+              </a>
+            </li>
+          </ul>
+          
+          <hr>
+          
+          <ul class="nav nav-stacked">
+            <li>
+              <a href="./ingresos">
+                <i class="fa fa-money"></i>
+                Ingresos por Estacionamientos
+              </a>
+            </li>
+          </ul>
+          
+          <hr>
+          
+          <ul class="nav nav-stacked">
+            <li>
+              <a href="./reservaciones">
+                <i class="fa fa-check-square-o"></i>
+                Reservaciones
+              </a>
+            </li>
+          </ul>
+          
+          <hr>
+          
+        </div>
+        <!-- /span-3 -->
+	<div class="col-sm-10">
+        
+      <!-- column 2 --> 
+       <h3><i class="fa fa-bus"></i> Estacionamientos</h3>  
+            
+       <hr>
+      
+     <div class="row">
+            <!-- center left--> 
+          <!--/col-->
+         
+            <!--center-right-->
+          <!--/col-span-6-->
+     
+       <div class="col-md-8"> 
+      <table class="table table-striped">
+      {% if estacionamientos %}
+
+        <thead>
+          <tr><th></th><th></th><th>Propietario</th><th>Nombre del Estacionamiento</th><th>RIF</th><th></th></tr>
+        </thead>
+        <tbody>
+        {% for obj in estacionamientos %}
+          <tr><td><a href="./{{obj.id}}/tasa_reservacion" ><i class="fa fa-line-chart" data-toggle="tooltip" data-placement="top" title="Tasa de Reservación"></i></a></td><td>{{forloop.counter}}</td><td>{{obj.Propietario.NombreProp}}</td><td>{{obj.Nombre}}</td><td>{{obj.Propietario.Rif}}</td><td><a href="./{{obj.id}}"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="Detalle"></i></a></td></tr>
+        {% endfor %}
+        </tbody>
+        {% else %}
+       <h3>No hay estacionamientos</h3>
+      {% endif %}
+      </table>
+      <hr>              
+    </div><div class="col-md-4">
+
+    
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">
+                <i class="glyphicon glyphicon-wrench pull-right">
+                </i>
+                <h4>
+                  Crear estacionamiento
+                </h4>
+              </div>
+            </div>
+            <div class="panel-body">
+
+      
+              
+              <form action="." method="post" class="form form-vertical">
+              {% csrf_token %}
+              {{formEst}}
+              {{formProp}}
+                
+                <div class="control-group">
+                  <label>
+                  </label>
+                  <div class="controls">
+                    <button type="submit" class="btn btn-primary">
+                      Crear estacionamiento
+                    </button>
+                  </div>
+                </div>
+                
+                
+              </form>
+              
+              
+            </div>
+            <!--/panel content-->
+          </div>
+          <!--/panel-->
+          
+          <!--/panel-->
+          
+        </div></div><!--/row-->
+    </div>
+        
+      </div>
+      <!--/row-->
+      <!-- /upper section -->
+      
+      <!-- lower section -->
+      <div class="row">
+      </div>
+      <!--/row-->
+      
+    </div>
+    <!--/container-->
+
+    <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/livevalidation_standalone.js'%}"></script>
+    <script type="text/javascript">
+
+        new LiveValidation('id_Nombre').add(Validate.Format, { pattern: /^.+$/, failureMessage: "Inválido." });
+        new LiveValidation('id_Direccion').add(Validate.Format, { pattern: /^.+$/, failureMessage: "Inválido." });
+        new LiveValidation('id_NombreProp').add(Validate.Format, { pattern: /^[a-zA-ZáéíóúñÑÁÉÍÓÚ ]+$/, failureMessage: "Sólo debe contener letras." });        
+        new LiveValidation('id_Telefono_1').add(Validate.Format, { pattern: /^((0?212)|(0?412)|(0?416)|(0?414)|(0?424)|(0?426))-?\d{7}$/, failureMessage: "Debe introducir un formato válido." });
+        new LiveValidation('id_Telefono_2').add(Validate.Format, { pattern: /^((0?212)|(0?412)|(0?416)|(0?414)|(0?424)|(0?426))-?\d{7}$/, failureMessage: "Debe introducir un formato válido." });
+        new LiveValidation('id_Telefono_3').add(Validate.Format, { pattern: /^((0?212)|(0?412)|(0?416)|(0?414)|(0?424)|(0?426))-?\d{7}$/, failureMessage: "Debe introducir un formato válido." });
+        new LiveValidation('id_Email_1').add(Validate.Email);
+        new LiveValidation('id_Email_2').add(Validate.Email);
+        new LiveValidation('id_Rif').add(Validate.Format, { pattern: /^[JVD]-?\d{8}-?\d$/, failureMessage: "Introduzca un RIF con un formato válido." });
+    </script>
+</body></html>
